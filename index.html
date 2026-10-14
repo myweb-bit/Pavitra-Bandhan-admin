@@ -412,7 +412,7 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      max-height: 520px;
+      max-height: 650px;
       overflow-y: auto;
       padding-right: 4px;
     }
@@ -446,20 +446,31 @@
       display: block;
     }
 
+    .mini-lbl {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 3px;
+      margin-top: 4px;
+    }
+
     .admin-media-controls input[type="text"],
     .admin-media-controls textarea {
       width: 100%;
-      padding: 7px 10px;
+      padding: 8px 10px;
       border: 1px solid #ccc;
       border-radius: 6px;
       font-size: 0.85rem;
-      margin-bottom: 7px;
+      margin-bottom: 6px;
+      background: #fff;
     }
 
     .action-btn-row {
       display: flex;
       gap: 7px;
       flex-wrap: wrap;
+      margin-top: 4px;
     }
 
     .sm-btn {
@@ -488,6 +499,7 @@
       font-size: 0.8rem;
       font-weight: 600;
       color: #b36b00;
+      margin-top: 4px;
     }
 
     @media (max-width: 600px) {
@@ -530,7 +542,7 @@
       <img id="topAdminLogo" src="https://i.ibb.co/TDbGMSXY/56456.png" alt="Logo" />
       <div>
         <h1>पवित्र बंधन - मल्टी-बिज़नेस एडमिन पैनल</h1>
-        <span>Manage All Businesses, ImgBB Photos & Cloudinary Videos</span>
+        <span>Manage All Businesses, Titles, ImgBB Photos & Cloudinary Videos</span>
       </div>
     </div>
     <div class="header-actions">
@@ -561,7 +573,7 @@
 
     <div class="dashboard-grid">
 
-      <!-- CARD 1: ADD / MANAGE BUSINESSES & SERVICES (CATERING, STAND, RESTAURANT, ETC.) -->
+      <!-- CARD 1: ADD / MANAGE BUSINESSES & EDIT TITLES/DESCRIPTIONS -->
       <div class="admin-card">
         <h3><i class="fa-solid fa-store"></i> नया बिज़नेस / सर्विस पेज जोड़ें</h3>
         <form onsubmit="createNewBusiness(event)">
@@ -572,6 +584,10 @@
           <div class="form-group">
             <label>बिज़नेस का नाम (English में - वैकल्पिक)</label>
             <input type="text" id="newBizNameEn" placeholder="e.g. Pavitra Bandhan Catering Service" />
+          </div>
+          <div class="form-group">
+            <label>सबटाइटल / टैगलाइन (Subtitle / Tagline)</label>
+            <input type="text" id="newBizSubtitle" placeholder="जैसे: बिताएं कुछ यादगार पल, अपने ही आँगन में" />
           </div>
           <div class="form-group">
             <label>कैटेगरी बैज (Category Tag) *</label>
@@ -592,7 +608,7 @@
         </form>
 
         <div class="media-list-header">
-          <span>सभी बिज़नेस / सेवाएं (Manage Pages)</span>
+          <span>सभी बिज़नेस के नाम और विवरण एडिट करें</span>
           <span id="bizCountBadge" style="font-size: 0.8rem; color: #666;">1 सेवा</span>
         </div>
         <div class="admin-item-list" id="adminBusinessList"></div>
@@ -778,7 +794,7 @@
     const db = getDatabase(app);
 
     // ================= STATE VARIABLES =================
-    let selectedBizId = "default_hall"; // 'default_hall' or custom bizId from 'businesses' node
+    let selectedBizId = "default_hall";
     let defaultHallPhotos = {};
     let defaultHallVideos = {};
     let customBusinesses = {};
@@ -935,6 +951,11 @@
     onValue(settingsRef, (snapshot) => {
       const defaults = {
         logoUrl: "https://i.ibb.co/TDbGMSXY/56456.png",
+        hallName: "पवित्र बंधन - मैरिज हॉल एंड लॉन",
+        hallNameEn: "Pavitra Bandhan - Marriage Hall & Lawn",
+        hallSubtitle: "बिताएं कुछ यादगार पल, अपने ही आँगन में।",
+        hallCategory: "मैरिज हॉल एवं लॉन • 4.0 ★",
+        hallDesc: "ओपी थाना के पास, एसबीआई के सामने, मिशन, महादेवा रोड, सिवान (बिहार) में स्थित आपके शुभ विवाह, सगाई, रिसेप्शन और सभी मांगलिक कार्यक्रमों के लिए भव्य मैरिज हॉल एंड लॉन।",
         hallCoverUrl: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80",
         phone: "075207 50999",
         whatsapp: "917520750999",
@@ -1017,7 +1038,6 @@
 
     onValue(businessesRef, (snapshot) => {
       customBusinesses = snapshot.exists() ? snapshot.val() : {};
-      // If currently selected business was deleted, fallback to default_hall
       if (selectedBizId !== "default_hall" && !customBusinesses[selectedBizId]) {
         selectedBizId = "default_hall";
       }
@@ -1039,7 +1059,7 @@
 
     function getSelectedBusinessName() {
       if (selectedBizId === "default_hall") {
-        return "पवित्र बंधन - मैरिज हॉल एंड लॉन";
+        return siteSettingsData.hallName || "पवित्र बंधन - मैरिज हॉल एंड लॉन";
       }
       return customBusinesses[selectedBizId]?.name || "चयनित बिज़नेस";
     }
@@ -1058,8 +1078,10 @@
       const listEl = document.getElementById("adminBusinessList");
       const countBadge = document.getElementById("bizCountBadge");
 
+      const mainHallTitle = siteSettingsData.hallName || "पवित्र बंधन - मैरिज हॉल एंड लॉन";
+
       // 1. Populate Dropdown Selector
-      selector.innerHTML = `<option value="default_hall">🏢 पवित्र बंधन - मैरिज हॉल एंड लॉन (Main)</option>`;
+      selector.innerHTML = `<option value="default_hall">🏢 ${mainHallTitle} (Main)</option>`;
       const customKeys = Object.keys(customBusinesses);
       customKeys.forEach((bizId) => {
         const b = customBusinesses[bizId];
@@ -1079,7 +1101,7 @@
       listEl.innerHTML = "";
       countBadge.textContent = `${1 + customKeys.length} सेवाएं`;
 
-      // A. Default Marriage Hall Card Item
+      // A. Default Marriage Hall Card Item (NOW WITH FULL EDITABLE INPUT FIELDS!)
       const hallPhotoCount = Object.keys(defaultHallPhotos).length;
       const hallVideoCount = Object.keys(defaultHallVideos).length;
       const hallCover = siteSettingsData.hallCoverUrl || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80";
@@ -1092,15 +1114,31 @@
           <img src="${hallCover}" alt="Marriage Hall Cover" />
         </div>
         <div class="admin-media-controls">
-          <strong style="color:var(--primary-dark); font-size:0.95rem; display:block; margin-bottom:4px;">
-            🏢 पवित्र बंधन - मैरिज हॉल एंड लॉन (मुख्य पेज)
-          </strong>
-          <span style="font-size:0.78rem; color:#555; display:block; margin-bottom:8px;">
-            ${hallPhotoCount} फोटो • ${hallVideoCount} वीडियो
-          </span>
+          <div style="background:#fff4e0; padding:6px 10px; border-radius:6px; border:1px solid var(--gold); margin-bottom:8px; font-size:0.8rem; font-weight:700; color:var(--primary-dark);">
+            🏢 मुख्य पेज (Main Marriage Hall) • ${hallPhotoCount} फोटो • ${hallVideoCount} वीडियो
+          </div>
+
+          <span class="mini-lbl">मुख्य हॉल का नाम (हिंदी में):</span>
+          <input type="text" id="mainHallNameInput" value="${siteSettingsData.hallName || 'पवित्र बंधन - मैरिज हॉल एंड लॉन'}" placeholder="बिज़नेस का नाम (हिंदी)" />
+
+          <span class="mini-lbl">मुख्य हॉल का नाम (English में):</span>
+          <input type="text" id="mainHallNameEnInput" value="${siteSettingsData.hallNameEn || 'Pavitra Bandhan - Marriage Hall & Lawn'}" placeholder="Business Name (English)" />
+
+          <span class="mini-lbl">सबटाइटल / टैगलाइन (Subtitle / Tagline):</span>
+          <input type="text" id="mainHallSubInput" value="${siteSettingsData.hallSubtitle || 'बिताएं कुछ यादगार पल, अपने ही आँगन में।'}" placeholder="जैसे: बिताएं कुछ यादगार पल, अपने ही आँगन में" />
+
+          <span class="mini-lbl">कैटेगरी / रेटिंग बैज (Category Badge):</span>
+          <input type="text" id="mainHallCatInput" value="${siteSettingsData.hallCategory || 'मैरिज हॉल एवं लॉन • 4.0 ★'}" placeholder="जैसे: मैरिज हॉल एवं लॉन • 4.0 ★" />
+
+          <span class="mini-lbl">हॉल का विवरण (Description):</span>
+          <textarea id="mainHallDescInput" rows="3" placeholder="मैरिज हॉल के बारे में जानकारी...">${siteSettingsData.hallDesc || ''}</textarea>
+
           <div class="action-btn-row">
+            <button class="sm-btn save" onclick="updateMainHallDetails()">
+              <i class="fa-solid fa-floppy-disk"></i> नाम व डिटेल सेव करें
+            </button>
             <button class="sm-btn select-biz" onclick="onSelectActiveBusiness('default_hall')">
-              <i class="fa-solid fa-photo-film"></i> इसके फोटो/वीडियो मैनेज करें
+              <i class="fa-solid fa-photo-film"></i> फोटो/वीडियो मैनेज
             </button>
             <label class="sm-btn replace">
               <i class="fa-solid fa-image"></i> कवर फोटो बदलें
@@ -1112,7 +1150,7 @@
       `;
       listEl.appendChild(defaultDiv);
 
-      // B. Custom Businesses Cards
+      // B. Custom Businesses Cards (WITH FULL EDITABLE INPUT FIELDS)
       customKeys.reverse().forEach((bizId) => {
         const b = customBusinesses[bizId];
         if (!b) return;
@@ -1127,19 +1165,31 @@
             <img src="${b.coverUrl || ''}" alt="${b.name || ''}" />
           </div>
           <div class="admin-media-controls">
-            <input type="text" id="bizName_${bizId}" value="${b.name || ''}" placeholder="बिज़नेस का नाम (हिंदी)" />
-            <input type="text" id="bizNameEn_${bizId}" value="${b.nameEn || ''}" placeholder="Business Name (English)" />
-            <input type="text" id="bizCat_${bizId}" value="${b.category || ''}" placeholder="कैटेगरी बैज" />
-            <textarea id="bizDesc_${bizId}" rows="2" placeholder="विवरण">${b.description || ''}</textarea>
-            <div style="font-size:0.78rem; color:#555; margin-bottom:8px;">
-              <strong>${pCount} फोटो • ${vCount} वीडियो</strong>
+            <div style="background:#eef6ff; padding:6px 10px; border-radius:6px; border:1px solid #b6d4fe; margin-bottom:8px; font-size:0.8rem; font-weight:700; color:#084298;">
+              ✨ अतिरिक्त सेवा पेज • ${pCount} फोटो • ${vCount} वीडियो
             </div>
+
+            <span class="mini-lbl">बिज़नेस का नाम (हिंदी):</span>
+            <input type="text" id="bizName_${bizId}" value="${b.name || ''}" placeholder="बिज़नेस का नाम (हिंदी)" />
+
+            <span class="mini-lbl">बिज़नेस का नाम (English):</span>
+            <input type="text" id="bizNameEn_${bizId}" value="${b.nameEn || ''}" placeholder="Business Name (English)" />
+
+            <span class="mini-lbl">सबटाइटल / टैगलाइन (Subtitle):</span>
+            <input type="text" id="bizSub_${bizId}" value="${b.subtitle || ''}" placeholder="टैगलाइन या सबटाइटल" />
+
+            <span class="mini-lbl">कैटेगरी बैज (Category Badge):</span>
+            <input type="text" id="bizCat_${bizId}" value="${b.category || ''}" placeholder="कैटेगरी बैज" />
+
+            <span class="mini-lbl">बिज़नेस का विवरण (Description):</span>
+            <textarea id="bizDesc_${bizId}" rows="3" placeholder="विवरण">${b.description || ''}</textarea>
+
             <div class="action-btn-row">
-              <button class="sm-btn select-biz" onclick="onSelectActiveBusiness('${bizId}')">
-                <i class="fa-solid fa-photo-film"></i> इसके फोटो/वीडियो डालें
-              </button>
               <button class="sm-btn save" onclick="updateBusinessDetails('${bizId}')">
-                <i class="fa-solid fa-pen"></i> डिटेल सेव
+                <i class="fa-solid fa-floppy-disk"></i> नाम व डिटेल सेव करें
+              </button>
+              <button class="sm-btn select-biz" onclick="onSelectActiveBusiness('${bizId}')">
+                <i class="fa-solid fa-photo-film"></i> फोटो/वीडियो डालें
               </button>
               <label class="sm-btn replace">
                 <i class="fa-solid fa-rotate"></i> कवर बदलें
@@ -1156,11 +1206,41 @@
       });
     }
 
+    // Save Main Marriage Hall Name, Subtitle, Category & Description
+    window.updateMainHallDetails = async function() {
+      const hallName = document.getElementById("mainHallNameInput").value.trim();
+      const hallNameEn = document.getElementById("mainHallNameEnInput").value.trim();
+      const hallSubtitle = document.getElementById("mainHallSubInput").value.trim();
+      const hallCategory = document.getElementById("mainHallCatInput").value.trim();
+      const hallDesc = document.getElementById("mainHallDescInput").value.trim();
+      const st = document.getElementById("defaultHallCoverStatus");
+
+      try {
+        st.style.color = "#b36b00";
+        st.textContent = "⏳ मुख्य हॉल का नाम और विवरण सेव हो रहा है...";
+        await update(settingsRef, {
+          hallName,
+          hallNameEn: hallNameEn || hallName,
+          hallSubtitle,
+          hallCategory,
+          hallDesc,
+          updatedAt: Date.now()
+        });
+        st.style.color = "green";
+        st.textContent = "✅ मुख्य मैरिज हॉल का नाम और विवरण अपडेट हो गया!";
+        setTimeout(() => { if (st) st.textContent = ""; }, 3000);
+      } catch (err) {
+        st.style.color = "red";
+        st.textContent = "❌ त्रुटि: " + err.message;
+      }
+    };
+
     // Create a New Business Page (Catering, Stand/Tent, Restaurant, etc.)
     window.createNewBusiness = async function(e) {
       e.preventDefault();
       const nameInput = document.getElementById("newBizName");
       const nameEnInput = document.getElementById("newBizNameEn");
+      const subInput = document.getElementById("newBizSubtitle");
       const catInput = document.getElementById("newBizCategory");
       const descInput = document.getElementById("newBizDesc");
       const coverInput = document.getElementById("newBizCoverFile");
@@ -1179,13 +1259,15 @@
         const newBizRef = push(businessesRef);
         const newBizId = newBizRef.key;
 
+        const subVal = subInput.value.trim() || catInput.value.trim();
+
         await set(newBizRef, {
           name: nameInput.value.trim(),
           nameEn: nameEnInput.value.trim() || nameInput.value.trim(),
           category: catInput.value.trim(),
           categoryEn: catInput.value.trim(),
-          subtitle: catInput.value.trim(),
-          subtitleEn: catInput.value.trim(),
+          subtitle: subVal,
+          subtitleEn: subVal,
           description: descInput.value.trim(),
           descEn: descInput.value.trim(),
           coverUrl: coverUrl,
@@ -1197,11 +1279,11 @@
 
         nameInput.value = "";
         nameEnInput.value = "";
+        subInput.value = "";
         catInput.value = "";
         descInput.value = "";
         coverInput.value = "";
 
-        // Automatically switch active selector to the newly created business!
         window.onSelectActiveBusiness(newBizId);
       } catch (err) {
         statusEl.style.color = "red";
@@ -1231,6 +1313,7 @@
     window.updateBusinessDetails = async function(bizId) {
       const name = document.getElementById(`bizName_${bizId}`).value.trim();
       const nameEn = document.getElementById(`bizNameEn_${bizId}`).value.trim();
+      const subtitle = document.getElementById(`bizSub_${bizId}`).value.trim();
       const category = document.getElementById(`bizCat_${bizId}`).value.trim();
       const description = document.getElementById(`bizDesc_${bizId}`).value.trim();
       const st = document.getElementById(`bizItemStatus_${bizId}`);
@@ -1242,8 +1325,8 @@
         nameEn: nameEn || name,
         category,
         categoryEn: category,
-        subtitle: category,
-        subtitleEn: category,
+        subtitle: subtitle || category,
+        subtitleEn: subtitle || category,
         description,
         descEn: description,
         updatedAt: Date.now()
@@ -1553,4 +1636,4 @@
     };
   </script>
 </body>
-  </html>
+</html>
