@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Panel | पवित्र बंधन - मैरिज हॉल</title>
+  <title>Admin Panel | पवित्र बंधन - मैरिज हॉल एंड लॉन</title>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/TDbGMSXY/56456.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rozha+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
@@ -465,10 +466,10 @@
   <!-- ==================== 2. TOP HEADER ==================== -->
   <header>
     <div class="header-left">
-      <img id="topAdminLogo" src="https://cdn-icons-png.flaticon.com/512/703/703319.png" alt="Logo" />
+      <img id="topAdminLogo" src="https://i.ibb.co/TDbGMSXY/56456.png" alt="Logo" />
       <div>
         <h1>पवित्र बंधन - एडमिन पैनल</h1>
-        <span>Realtime Database Control Center</span>
+        <span>ImgBB Photos & Cloudinary Videos Control Center</span>
       </div>
     </div>
     <div class="header-actions">
@@ -489,7 +490,7 @@
       <div class="admin-card">
         <h3><i class="fa-solid fa-crown"></i> मैरिज हॉल लोगो (Logo) बदलें</h3>
         <div class="logo-preview-wrap">
-          <img id="currentLogoPreview" src="https://cdn-icons-png.flaticon.com/512/703/703319.png" alt="Current Logo" />
+          <img id="currentLogoPreview" src="https://i.ibb.co/TDbGMSXY/56456.png" alt="Current Logo" />
           <div style="font-size: 0.83rem; color: #555;">
             <strong>वर्तमान लोगो</strong><br />
             यह लोगो यूजर वेबसाइट के ऊपर और इंट्रो में दिखता है।
@@ -501,7 +502,7 @@
             <input type="file" id="logoFileInput" accept="image/*" required />
           </div>
           <button type="submit" class="admin-btn" id="logoUploadBtn">
-            <i class="fa-solid fa-upload"></i> नया लोगो अपलोड करें
+            <i class="fa-solid fa-upload"></i> नया लोगो अपलोड करें (ImgBB)
           </button>
           <div id="logoStatus" class="status-msg"></div>
         </form>
@@ -526,7 +527,7 @@
           </div>
           <div class="form-group">
             <label>Facebook ID / पेज का नाम या लिंक</label>
-            <input type="text" id="admFb" placeholder="Pavitra Bandhan Marriage Hall" />
+            <input type="text" id="admFb" placeholder="Pavitra Bandhan Marriage Hall & Lawn" />
           </div>
           <div class="form-group">
             <label>मैरिज हॉल का पता (Address)</label>
@@ -566,23 +567,23 @@
         </div>
       </div>
 
-      <!-- CARD C: VIDEO GALLERY MANAGEMENT (Base64 + Firebase) -->
+      <!-- CARD C: VIDEO GALLERY MANAGEMENT (Cloudinary + Firebase) -->
       <div class="admin-card">
-        <h3><i class="fa-solid fa-film"></i> वीडियो गैलरी मैनेजर (Base64 RTDB)</h3>
+        <h3><i class="fa-solid fa-film"></i> वीडियो गैलरी मैनेजर (Cloudinary)</h3>
         <form onsubmit="uploadNewVideo(event)">
           <div class="form-group">
             <label>वीडियो का टाइटल (Video Title)</label>
-            <input type="text" id="newVideoTitle" placeholder="जैसे: मैरिज हॉल फुल नाइट व्यू" required />
+            <input type="text" id="newVideoTitle" placeholder="जैसे: मैरिज हॉल एंड लॉन फुल नाइट व्यू" required />
           </div>
           <div class="form-group">
-            <label>वीडियो चुनें (MP4 / WebM)</label>
+            <label>वीडियो चुनें (MP4 / WebM / MOV)</label>
             <input type="file" id="newVideoFile" accept="video/*" required />
-            <small style="color: #666; display: block; margin-top: 4px; font-size: 0.78rem;">
-              * यह वीडियो Base64 में बदलकर सीधे Realtime Database में सेव होगा।
+            <small style="color: #1f8b4c; display: block; margin-top: 4px; font-size: 0.78rem; font-weight: 500;">
+              ✓ वीडियो Cloudinary पर अपलोड होगा और सिर्फ उसका छोटा लिंक Firebase में सेव होगा।
             </small>
           </div>
           <button type="submit" class="admin-btn" id="videoUploadBtn">
-            <i class="fa-solid fa-file-video"></i> नया वीडियो अपलोड करें
+            <i class="fa-solid fa-cloud-arrow-up"></i> नया वीडियो अपलोड करें
           </button>
           <div id="videoUploadStatus" class="status-msg"></div>
         </form>
@@ -625,7 +626,7 @@
     </div>
   </main>
 
-  <!-- ==================== FIREBASE & ADMIN LOGIC ==================== -->
+  <!-- ==================== FIREBASE, IMGBB & CLOUDINARY LOGIC ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -650,8 +651,12 @@
       appId: "1:949702610274:web:04b289c12ef1a787e0f03b"
     };
 
-    // 2. ImgBB API Key
+    // 2. ImgBB API Key (फोटो और लोगो के लिए)
     const IMGBB_API_KEY = "8104f8ac745d8dc4621b9d758844b418";
+
+    // 3. Cloudinary Configuration (वीडियो के लिए)
+    const CLOUDINARY_CLOUD_NAME = "z0tih2mp";
+    const CLOUDINARY_UPLOAD_PRESET = "Sfxrxjx";
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
@@ -661,12 +666,10 @@
     let activePinInDb = "1234"; // Default only if never changed in DB
     let pinLoadedFromDb = false;
 
-    // Listen to PIN in Realtime Database
     onValue(pinRef, (snapshot) => {
       if (snapshot.exists() && snapshot.val()) {
         activePinInDb = String(snapshot.val());
       } else {
-        // Initialize default 1234 in database if no PIN node exists yet
         set(pinRef, "1234");
         activePinInDb = "1234";
       }
@@ -753,7 +756,7 @@
       }
     };
 
-    // ================= IMGBB HELPER =================
+    // ================= IMGBB HELPER (FOR PHOTOS & LOGO) =================
     async function uploadImageToImgBB(file) {
       const formData = new FormData();
       formData.append("image", file);
@@ -766,17 +769,55 @@
       return result.data.url;
     }
 
+    // ================= CLOUDINARY HELPER (FOR VIDEOS WITH LIVE PROGRESS) =================
+    function uploadVideoToCloudinary(file, onProgressCallback) {
+      return new Promise((resolve, reject) => {
+        const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`;
+        const xhr = new XMLHttpRequest();
+        const formData = new FormData();
+
+        formData.append("file", file);
+        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+        formData.append("resource_type", "video");
+
+        xhr.open("POST", url, true);
+
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable && typeof onProgressCallback === "function") {
+            const percent = Math.round((event.loaded / event.total) * 100);
+            onProgressCallback(percent);
+          }
+        };
+
+        xhr.onload = () => {
+          try {
+            const response = JSON.parse(xhr.responseText);
+            if (xhr.status >= 200 && xhr.status < 300 && response.secure_url) {
+              resolve(response.secure_url);
+            } else {
+              reject(new Error(response.error?.message || "Cloudinary पर वीडियो अपलोड विफल रहा"));
+            }
+          } catch (e) {
+            reject(new Error("Cloudinary सर्वर से गलत रिस्पॉन्स मिला"));
+          }
+        };
+
+        xhr.onerror = () => reject(new Error("नेटवर्क त्रुटि: वीडियो अपलोड नहीं हो सका"));
+        xhr.send(formData);
+      });
+    }
+
     // ================= SITE SETTINGS & LOGO =================
     const settingsRef = ref(db, "siteSettings");
 
     onValue(settingsRef, (snapshot) => {
       const defaults = {
-        logoUrl: "https://cdn-icons-png.flaticon.com/512/703/703319.png",
+        logoUrl: "https://i.ibb.co/TDbGMSXY/56456.png",
         phone: "075207 50999",
         whatsapp: "917520750999",
         email: "info@pavitrabandhan.com",
         instagram: "@pavitrabandhan_siwan",
-        facebook: "Pavitra Bandhan Marriage Hall",
+        facebook: "Pavitra Bandhan Marriage Hall & Lawn",
         address: "Near OP Thana, In front of SBI, Mission, Mahadeva Rd, Mahadeva, Siwan, Bihar 841227"
       };
 
@@ -848,7 +889,7 @@
       }
     };
 
-    // ================= PHOTO GALLERY MANAGEMENT =================
+    // ================= PHOTO GALLERY MANAGEMENT (ImgBB) =================
     const photosRef = ref(db, "gallery/photos");
 
     onValue(photosRef, (snapshot) => {
@@ -966,17 +1007,8 @@
       await remove(ref(db, `gallery/photos/${id}`));
     };
 
-    // ================= VIDEO GALLERY MANAGEMENT (Base64 + RTDB) =================
+    // ================= VIDEO GALLERY MANAGEMENT (Cloudinary + RTDB) =================
     const videosRef = ref(db, "gallery/videos");
-
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (err) => reject(err);
-        reader.readAsDataURL(file);
-      });
-    }
 
     onValue(videosRef, (snapshot) => {
       const listEl = document.getElementById("adminVideoList");
@@ -995,7 +1027,7 @@
 
       keys.forEach((id) => {
         const item = data[id];
-        const videoSrc = item.base64Data || item.url || "";
+        const videoSrc = item.url || item.base64Data || "";
         const div = document.createElement("div");
         div.className = "admin-media-item";
         div.innerHTML = `
@@ -1036,18 +1068,21 @@
       try {
         btn.disabled = true;
         statusEl.style.color = "#b36b00";
-        statusEl.textContent = "⏳ वीडियो को Base64 में बदलकर डेटाबेस में भेजा जा रहा है...";
+        statusEl.textContent = "⏳ वीडियो Cloudinary पर अपलोड हो रहा है (0%)...";
 
-        const base64Data = await fileToBase64(file);
+        const videoUrl = await uploadVideoToCloudinary(file, (percent) => {
+          statusEl.textContent = `⏳ वीडियो Cloudinary पर अपलोड हो रहा है (${percent}%)...`;
+        });
+
         const newRef = push(videosRef);
         await set(newRef, {
           title: titleInput.value.trim(),
-          base64Data: base64Data,
+          url: videoUrl,
           createdAt: Date.now()
         });
 
         statusEl.style.color = "green";
-        statusEl.textContent = "✅ वीडियो सफलतापूर्वक Realtime Database में अपलोड हो गया!";
+        statusEl.textContent = "✅ वीडियो Cloudinary पर अपलोड होकर डेटाबेस में सेव हो गया!";
         titleInput.value = "";
         fileInput.value = "";
       } catch (err) {
@@ -1075,12 +1110,18 @@
       const st = document.getElementById(`videoItemStatus_${id}`);
       try {
         st.style.color = "#b36b00";
-        st.textContent = "⏳ नया वीडियो Base64 में बदलकर अपलोड हो रहा है...";
-        const newBase64 = await fileToBase64(file);
+        st.textContent = "⏳ नया वीडियो Cloudinary पर अपलोड हो रहा है (0%)...";
+
+        const newVideoUrl = await uploadVideoToCloudinary(file, (percent) => {
+          st.textContent = `⏳ नया वीडियो Cloudinary पर अपलोड हो रहा है (${percent}%)...`;
+        });
+
         await update(ref(db, `gallery/videos/${id}`), {
-          base64Data: newBase64,
+          url: newVideoUrl,
+          base64Data: null, // यदि पहले का कोई Base64 डेटा हो तो हटाकर जगह खाली कर देगा
           updatedAt: Date.now()
         });
+
         st.style.color = "green";
         st.textContent = "✅ वीडियो सफलतापूर्वक रिप्लेस हो गया!";
       } catch (err) {
@@ -1095,4 +1136,4 @@
     };
   </script>
 </body>
-</html>
+                                                  </html>
