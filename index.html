@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Panel | पवित्र बंधन - मैरिज हॉल एंड लॉन</title>
+  <title>Admin Panel | पवित्र बंधन - मैरिज हॉल एंड लॉन (Multi-Business Control)</title>
   <link rel="icon" type="image/png" href="https://i.ibb.co/TDbGMSXY/56456.png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Rozha+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
@@ -212,14 +212,55 @@
     /* ==================== DASHBOARD LAYOUT ==================== */
     #dashboardContent {
       display: none;
-      padding: 28px 4% 60px;
-      max-width: 1400px;
+      padding: 25px 4% 60px;
+      max-width: 1420px;
       margin: 0 auto;
+    }
+
+    /* Active Business Selector Banner */
+    .active-biz-banner {
+      background: linear-gradient(90deg, #4a0713, #7a1224);
+      color: #fff;
+      padding: 18px 22px;
+      border-radius: 14px;
+      border: 2px solid var(--gold);
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      box-shadow: 0 8px 24px rgba(122, 18, 36, 0.2);
+    }
+
+    .active-biz-banner h2 {
+      font-family: 'Rozha One', serif;
+      color: var(--gold-light);
+      font-size: 1.4rem;
+      margin-bottom: 3px;
+    }
+
+    .active-biz-banner p {
+      font-size: 0.84rem;
+      color: #f5e2c8;
+    }
+
+    .biz-select-dropdown {
+      padding: 11px 16px;
+      border-radius: 10px;
+      border: 2px solid var(--gold-light);
+      background: #fff;
+      color: var(--primary-dark);
+      font-size: 0.96rem;
+      font-weight: 700;
+      min-width: 280px;
+      cursor: pointer;
+      outline: none;
     }
 
     .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
       gap: 24px;
       align-items: start;
     }
@@ -238,7 +279,7 @@
     .admin-card h3 {
       color: var(--primary-dark);
       font-size: 1.15rem;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       padding-bottom: 10px;
       border-bottom: 1px solid #eee;
       display: flex;
@@ -250,19 +291,33 @@
       color: var(--primary);
     }
 
-    .form-group {
+    .target-badge {
+      background: #fff4e0;
+      border: 1px solid var(--gold);
+      color: var(--primary-dark);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
       margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .form-group {
+      margin-bottom: 13px;
     }
 
     .form-group label {
       display: block;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 600;
       color: #333;
       margin-bottom: 5px;
     }
 
-    .form-group input, .form-group textarea {
+    .form-group input, .form-group textarea, .form-group select {
       width: 100%;
       padding: 10px 12px;
       border: 1px solid #ccc;
@@ -272,7 +327,7 @@
       transition: 0.2s;
     }
 
-    .form-group input:focus, .form-group textarea:focus {
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(122, 18, 36, 0.1);
     }
@@ -339,13 +394,13 @@
       line-height: 1.4;
     }
 
-    /* Media List inside Cards */
+    /* Media & Business List inside Cards */
     .media-list-header {
       margin-top: 22px;
       margin-bottom: 12px;
       padding-bottom: 6px;
       border-bottom: 2px solid #f0f0f0;
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       color: var(--primary-dark);
       font-weight: 700;
       display: flex;
@@ -357,7 +412,7 @@
       display: flex;
       flex-direction: column;
       gap: 14px;
-      max-height: 540px;
+      max-height: 520px;
       overflow-y: auto;
       padding-right: 4px;
     }
@@ -380,37 +435,38 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      max-height: 220px;
+      max-height: 200px;
     }
 
     .media-thumb-box img, .media-thumb-box video {
       width: 100%;
       height: auto;
-      max-height: 220px;
+      max-height: 200px;
       object-fit: contain;
       display: block;
     }
 
-    .admin-media-controls input[type="text"] {
+    .admin-media-controls input[type="text"],
+    .admin-media-controls textarea {
       width: 100%;
-      padding: 8px 10px;
+      padding: 7px 10px;
       border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 0.88rem;
-      margin-bottom: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 7px;
     }
 
     .action-btn-row {
       display: flex;
-      gap: 8px;
+      gap: 7px;
       flex-wrap: wrap;
     }
 
     .sm-btn {
       flex: 1;
-      min-width: 90px;
+      min-width: 85px;
       padding: 8px 10px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 600;
       border: none;
       border-radius: 6px;
@@ -426,6 +482,7 @@
     .sm-btn.save { background: var(--success); }
     .sm-btn.replace { background: var(--warning); }
     .sm-btn.delete { background: var(--danger); }
+    .sm-btn.select-biz { background: var(--primary); }
 
     .item-inline-status {
       font-size: 0.8rem;
@@ -436,6 +493,10 @@
     @media (max-width: 600px) {
       .dashboard-grid {
         grid-template-columns: 1fr;
+      }
+      .biz-select-dropdown {
+        width: 100%;
+        min-width: unset;
       }
       header {
         padding: 10px 4%;
@@ -468,8 +529,8 @@
     <div class="header-left">
       <img id="topAdminLogo" src="https://i.ibb.co/TDbGMSXY/56456.png" alt="Logo" />
       <div>
-        <h1>पवित्र बंधन - एडमिन पैनल</h1>
-        <span>ImgBB Photos & Cloudinary Videos Control Center</span>
+        <h1>पवित्र बंधन - मल्टी-बिज़नेस एडमिन पैनल</h1>
+        <span>Manage All Businesses, ImgBB Photos & Cloudinary Videos</span>
       </div>
     </div>
     <div class="header-actions">
@@ -484,11 +545,129 @@
 
   <!-- ==================== 3. MAIN ADMIN DASHBOARD ==================== -->
   <main id="dashboardContent">
+
+    <!-- TOP ACTIVE BUSINESS SELECTOR BANNER -->
+    <div class="active-biz-banner">
+      <div>
+        <h2><i class="fa-solid fa-layer-group"></i> किस बिज़नेस / सर्विस में फोटो-वीडियो डालना है चुनें:</h2>
+        <p>यहाँ से जिस बिज़नेस को चुनेंगे, नीचे फोटो और वीडियो उसी के पेज के अंदर अपलोड और एडिट होंगे।</p>
+      </div>
+      <div>
+        <select id="activeBizSelector" class="biz-select-dropdown" onchange="onSelectActiveBusiness(this.value)">
+          <option value="default_hall">🏢 पवित्र बंधन - मैरिज हॉल एंड लॉन (Main)</option>
+        </select>
+      </div>
+    </div>
+
     <div class="dashboard-grid">
 
-      <!-- CARD A: LOGO & CONTACT / SOCIAL SETTINGS -->
+      <!-- CARD 1: ADD / MANAGE BUSINESSES & SERVICES (CATERING, STAND, RESTAURANT, ETC.) -->
       <div class="admin-card">
-        <h3><i class="fa-solid fa-crown"></i> मैरिज हॉल लोगो (Logo) बदलें</h3>
+        <h3><i class="fa-solid fa-store"></i> नया बिज़नेस / सर्विस पेज जोड़ें</h3>
+        <form onsubmit="createNewBusiness(event)">
+          <div class="form-group">
+            <label>बिज़नेस / सेवा का नाम (हिंदी में) *</label>
+            <input type="text" id="newBizName" placeholder="जैसे: पवित्र बंधन कैटरिंग सर्विस या सिकंदर टेंट हाउस" required />
+          </div>
+          <div class="form-group">
+            <label>बिज़नेस का नाम (English में - वैकल्पिक)</label>
+            <input type="text" id="newBizNameEn" placeholder="e.g. Pavitra Bandhan Catering Service" />
+          </div>
+          <div class="form-group">
+            <label>कैटेगरी बैज (Category Tag) *</label>
+            <input type="text" id="newBizCategory" placeholder="जैसे: कैटरिंग सेवा • बुकिंग चालू है" required />
+          </div>
+          <div class="form-group">
+            <label>बिज़नेस के बारे में जानकारी (Description) *</label>
+            <textarea id="newBizDesc" rows="2" placeholder="इस सेवा की खासियत और बुकिंग की जानकारी लिखें..." required></textarea>
+          </div>
+          <div class="form-group">
+            <label>कवर फोटो चुनें (Cover Image - ImgBB) *</label>
+            <input type="file" id="newBizCoverFile" accept="image/*" required />
+          </div>
+          <button type="submit" class="admin-btn success" id="createBizBtn">
+            <i class="fa-solid fa-plus-circle"></i> नया बिज़नेस पेज बनाएं
+          </button>
+          <div id="createBizStatus" class="status-msg"></div>
+        </form>
+
+        <div class="media-list-header">
+          <span>सभी बिज़नेस / सेवाएं (Manage Pages)</span>
+          <span id="bizCountBadge" style="font-size: 0.8rem; color: #666;">1 सेवा</span>
+        </div>
+        <div class="admin-item-list" id="adminBusinessList"></div>
+      </div>
+
+      <!-- CARD 2: PHOTO GALLERY MANAGEMENT FOR SELECTED BUSINESS (ImgBB) -->
+      <div class="admin-card">
+        <h3><i class="fa-solid fa-images"></i> फोटो गैलरी मैनेजर (ImgBB API)</h3>
+        <div class="target-badge">
+          <i class="fa-solid fa-folder-open"></i>
+          <span id="photoTargetBizName">चयनित पेज: पवित्र बंधन - मैरिज हॉल एंड लॉन</span>
+        </div>
+
+        <form onsubmit="uploadNewPhoto(event)">
+          <div class="form-group">
+            <label>फोटो का टाइटल (Photo Title)</label>
+            <input type="text" id="newPhotoTitle" placeholder="जैसे: भव्य स्टेज / कैटरिंग काउंटर" required />
+          </div>
+          <div class="form-group">
+            <label>फोटो फाइल चुनें (किसी भी साइज/रेशियो में)</label>
+            <input type="file" id="newPhotoFile" accept="image/*" required />
+          </div>
+          <button type="submit" class="admin-btn" id="photoUploadBtn">
+            <i class="fa-solid fa-cloud-arrow-up"></i> इस पेज में नया फोटो अपलोड करें
+          </button>
+          <div id="photoUploadStatus" class="status-msg"></div>
+        </form>
+
+        <div class="media-list-header">
+          <span>इस पेज के अपलोड किए गए फोटो</span>
+          <span id="photoCountBadge" style="font-size: 0.8rem; color: #666;">0 फोटो</span>
+        </div>
+        <div class="admin-item-list" id="adminPhotoList">
+          <p style="color:#777; font-size:0.88rem;">फोटो लोड हो रहे हैं...</p>
+        </div>
+      </div>
+
+      <!-- CARD 3: VIDEO GALLERY MANAGEMENT FOR SELECTED BUSINESS (Cloudinary) -->
+      <div class="admin-card">
+        <h3><i class="fa-solid fa-film"></i> वीडियो गैलरी मैनेजर (Cloudinary)</h3>
+        <div class="target-badge">
+          <i class="fa-solid fa-folder-open"></i>
+          <span id="videoTargetBizName">चयनित पेज: पवित्र बंधन - मैरिज हॉल एंड लॉन</span>
+        </div>
+
+        <form onsubmit="uploadNewVideo(event)">
+          <div class="form-group">
+            <label>वीडियो का टाइटल (Video Title)</label>
+            <input type="text" id="newVideoTitle" placeholder="जैसे: कार्यक्रम की झलक वीडियो" required />
+          </div>
+          <div class="form-group">
+            <label>वीडियो चुनें (MP4 / WebM / MOV)</label>
+            <input type="file" id="newVideoFile" accept="video/*" required />
+            <small style="color: #1f8b4c; display: block; margin-top: 4px; font-size: 0.78rem; font-weight: 500;">
+              ✓ वीडियो Cloudinary पर अपलोड होगा और सिर्फ छोटा लिंक इस बिज़नेस पेज में सेव होगा।
+            </small>
+          </div>
+          <button type="submit" class="admin-btn" id="videoUploadBtn">
+            <i class="fa-solid fa-cloud-arrow-up"></i> इस पेज में नया वीडियो अपलोड करें
+          </button>
+          <div id="videoUploadStatus" class="status-msg"></div>
+        </form>
+
+        <div class="media-list-header">
+          <span>इस पेज के अपलोड किए गए वीडियो</span>
+          <span id="videoCountBadge" style="font-size: 0.8rem; color: #666;">0 वीडियो</span>
+        </div>
+        <div class="admin-item-list" id="adminVideoList">
+          <p style="color:#777; font-size:0.88rem;">वीडियो लोड हो रहे हैं...</p>
+        </div>
+      </div>
+
+      <!-- CARD 4: LOGO, CONTACT & ADMIN PIN SETTINGS -->
+      <div class="admin-card">
+        <h3><i class="fa-solid fa-crown"></i> वेबसाइट लोगो (Logo) बदलें</h3>
         <div class="logo-preview-wrap">
           <img id="currentLogoPreview" src="https://i.ibb.co/TDbGMSXY/56456.png" alt="Current Logo" />
           <div style="font-size: 0.83rem; color: #555;">
@@ -508,7 +687,7 @@
         </form>
 
         <h3><i class="fa-solid fa-address-book"></i> कॉन्टैक्ट एवं सोशल आईडी सेटिंग्स</h3>
-        <form onsubmit="saveContactSettings(event)">
+        <form onsubmit="saveContactSettings(event)" style="margin-bottom: 26px;">
           <div class="form-group">
             <label>कॉलिंग नंबर (Phone Number)</label>
             <input type="text" id="admPhone" placeholder="075207 50999" required />
@@ -530,7 +709,7 @@
             <input type="text" id="admFb" placeholder="Pavitra Bandhan Marriage Hall & Lawn" />
           </div>
           <div class="form-group">
-            <label>मैरिज हॉल का पता (Address)</label>
+            <label>मुख्य पता (Address)</label>
             <textarea id="admAddress" rows="2" placeholder="Near OP Thana, In front of SBI, Mahadeva Rd, Siwan"></textarea>
           </div>
           <button type="submit" class="admin-btn success">
@@ -538,71 +717,8 @@
           </button>
           <div id="contactStatus" class="status-msg"></div>
         </form>
-      </div>
 
-      <!-- CARD B: PHOTO GALLERY MANAGEMENT (ImgBB + Firebase) -->
-      <div class="admin-card">
-        <h3><i class="fa-solid fa-images"></i> फोटो गैलरी मैनेजर (ImgBB API)</h3>
-        <form onsubmit="uploadNewPhoto(event)">
-          <div class="form-group">
-            <label>फोटो का टाइटल (Photo Title)</label>
-            <input type="text" id="newPhotoTitle" placeholder="जैसे: रॉयल वरमाला स्टेज डेकोरेशन" required />
-          </div>
-          <div class="form-group">
-            <label>फोटो फाइल चुनें (किसी भी साइज/रेशियो में)</label>
-            <input type="file" id="newPhotoFile" accept="image/*" required />
-          </div>
-          <button type="submit" class="admin-btn" id="photoUploadBtn">
-            <i class="fa-solid fa-cloud-arrow-up"></i> नया फोटो अपलोड करें
-          </button>
-          <div id="photoUploadStatus" class="status-msg"></div>
-        </form>
-
-        <div class="media-list-header">
-          <span>अपलोड किए गए फोटो</span>
-          <span id="photoCountBadge" style="font-size: 0.8rem; color: #666;">0 फोटो</span>
-        </div>
-        <div class="admin-item-list" id="adminPhotoList">
-          <p style="color:#777; font-size:0.88rem;">फोटो लोड हो रहे हैं...</p>
-        </div>
-      </div>
-
-      <!-- CARD C: VIDEO GALLERY MANAGEMENT (Cloudinary + Firebase) -->
-      <div class="admin-card">
-        <h3><i class="fa-solid fa-film"></i> वीडियो गैलरी मैनेजर (Cloudinary)</h3>
-        <form onsubmit="uploadNewVideo(event)">
-          <div class="form-group">
-            <label>वीडियो का टाइटल (Video Title)</label>
-            <input type="text" id="newVideoTitle" placeholder="जैसे: मैरिज हॉल एंड लॉन फुल नाइट व्यू" required />
-          </div>
-          <div class="form-group">
-            <label>वीडियो चुनें (MP4 / WebM / MOV)</label>
-            <input type="file" id="newVideoFile" accept="video/*" required />
-            <small style="color: #1f8b4c; display: block; margin-top: 4px; font-size: 0.78rem; font-weight: 500;">
-              ✓ वीडियो Cloudinary पर अपलोड होगा और सिर्फ उसका छोटा लिंक Firebase में सेव होगा।
-            </small>
-          </div>
-          <button type="submit" class="admin-btn" id="videoUploadBtn">
-            <i class="fa-solid fa-cloud-arrow-up"></i> नया वीडियो अपलोड करें
-          </button>
-          <div id="videoUploadStatus" class="status-msg"></div>
-        </form>
-
-        <div class="media-list-header">
-          <span>अपलोड किए गए वीडियो</span>
-          <span id="videoCountBadge" style="font-size: 0.8rem; color: #666;">0 वीडियो</span>
-        </div>
-        <div class="admin-item-list" id="adminVideoList">
-          <p style="color:#777; font-size:0.88rem;">वीडियो लोड हो रहे हैं...</p>
-        </div>
-      </div>
-
-      <!-- CARD D: CHANGE ADMIN PIN SECURITY -->
-      <div class="admin-card">
         <h3><i class="fa-solid fa-key"></i> एडमिन पिन बदलें (Change Admin PIN)</h3>
-        <p style="font-size: 0.84rem; color: #555; margin-bottom: 14px;">
-          यहाँ से नया पिन सेट करने पर पुराना पिन (जैसे 1234) तुरंत बंद हो जाएगा और पैनल सिर्फ नए पिन से ही खुलेगा।
-        </p>
         <form onsubmit="changeAdminPin(event)">
           <div class="form-group">
             <label>अभी का पिन डालें (Current PIN) *</label>
@@ -610,7 +726,7 @@
           </div>
           <div class="form-group">
             <label>नया पिन बनाएं (New PIN) *</label>
-            <input type="password" id="newPinInput" placeholder="नया पिन लिखें (कम से कम 4 अक्षर/अंक)" required />
+            <input type="password" id="newPinInput" placeholder="नया पिन लिखें (कम से कम 4 अंक)" required />
           </div>
           <div class="form-group">
             <label>नया पिन दोबारा लिखें (Confirm New PIN) *</label>
@@ -661,9 +777,16 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
+    // ================= STATE VARIABLES =================
+    let selectedBizId = "default_hall"; // 'default_hall' or custom bizId from 'businesses' node
+    let defaultHallPhotos = {};
+    let defaultHallVideos = {};
+    let customBusinesses = {};
+    let siteSettingsData = {};
+
     // ================= PIN SECURITY SYSTEM =================
     const pinRef = ref(db, "adminAuth/pin");
-    let activePinInDb = "1234"; // Default only if never changed in DB
+    let activePinInDb = "1234";
     let pinLoadedFromDb = false;
 
     onValue(pinRef, (snapshot) => {
@@ -756,7 +879,7 @@
       }
     };
 
-    // ================= IMGBB HELPER (FOR PHOTOS & LOGO) =================
+    // ================= IMGBB & CLOUDINARY HELPERS =================
     async function uploadImageToImgBB(file) {
       const formData = new FormData();
       formData.append("image", file);
@@ -769,7 +892,6 @@
       return result.data.url;
     }
 
-    // ================= CLOUDINARY HELPER (FOR VIDEOS WITH LIVE PROGRESS) =================
     function uploadVideoToCloudinary(file, onProgressCallback) {
       return new Promise((resolve, reject) => {
         const url = `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/video/upload`;
@@ -813,6 +935,7 @@
     onValue(settingsRef, (snapshot) => {
       const defaults = {
         logoUrl: "https://i.ibb.co/TDbGMSXY/56456.png",
+        hallCoverUrl: "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80",
         phone: "075207 50999",
         whatsapp: "917520750999",
         email: "info@pavitrabandhan.com",
@@ -821,22 +944,23 @@
         address: "Near OP Thana, In front of SBI, Mission, Mahadeva Rd, Mahadeva, Siwan, Bihar 841227"
       };
 
-      const data = snapshot.exists() ? { ...defaults, ...snapshot.val() } : defaults;
+      siteSettingsData = snapshot.exists() ? { ...defaults, ...snapshot.val() } : defaults;
 
-      if (data.logoUrl) {
-        document.getElementById("currentLogoPreview").src = data.logoUrl;
-        document.getElementById("topAdminLogo").src = data.logoUrl;
+      if (siteSettingsData.logoUrl) {
+        document.getElementById("currentLogoPreview").src = siteSettingsData.logoUrl;
+        document.getElementById("topAdminLogo").src = siteSettingsData.logoUrl;
       }
 
-      document.getElementById("admPhone").value = data.phone || "";
-      document.getElementById("admWhatsapp").value = data.whatsapp || "";
-      document.getElementById("admEmail").value = data.email || "";
-      document.getElementById("admInsta").value = data.instagram || "";
-      document.getElementById("admFb").value = data.facebook || "";
-      document.getElementById("admAddress").value = data.address || "";
+      document.getElementById("admPhone").value = siteSettingsData.phone || "";
+      document.getElementById("admWhatsapp").value = siteSettingsData.whatsapp || "";
+      document.getElementById("admEmail").value = siteSettingsData.email || "";
+      document.getElementById("admInsta").value = siteSettingsData.instagram || "";
+      document.getElementById("admFb").value = siteSettingsData.facebook || "";
+      document.getElementById("admAddress").value = siteSettingsData.address || "";
+
+      renderBusinessListAndSelector();
     });
 
-    // Upload & Update Logo
     window.uploadNewLogo = async function(e) {
       e.preventDefault();
       const fileInput = document.getElementById("logoFileInput");
@@ -864,7 +988,6 @@
       }
     };
 
-    // Save Contact & Social Media Details
     window.saveContactSettings = async function(e) {
       e.preventDefault();
       const statusEl = document.getElementById("contactStatus");
@@ -889,53 +1012,380 @@
       }
     };
 
-    // ================= PHOTO GALLERY MANAGEMENT (ImgBB) =================
-    const photosRef = ref(db, "gallery/photos");
+    // ================= MULTI-BUSINESS MANAGEMENT =================
+    const businessesRef = ref(db, "businesses");
 
-    onValue(photosRef, (snapshot) => {
-      const listEl = document.getElementById("adminPhotoList");
-      const countBadge = document.getElementById("photoCountBadge");
-      listEl.innerHTML = "";
-
-      if (!snapshot.exists()) {
-        countBadge.textContent = "0 फोटो";
-        listEl.innerHTML = `<p style="color:#777; font-size:0.88rem;">अभी कोई फोटो अपलोड नहीं है।</p>`;
-        return;
+    onValue(businessesRef, (snapshot) => {
+      customBusinesses = snapshot.exists() ? snapshot.val() : {};
+      // If currently selected business was deleted, fallback to default_hall
+      if (selectedBizId !== "default_hall" && !customBusinesses[selectedBizId]) {
+        selectedBizId = "default_hall";
       }
+      renderBusinessListAndSelector();
+      renderSelectedBusinessMedia();
+    });
 
-      const data = snapshot.val();
-      const keys = Object.keys(data).reverse();
-      countBadge.textContent = `${keys.length} फोटो`;
+    onValue(ref(db, "gallery/photos"), (snapshot) => {
+      defaultHallPhotos = snapshot.exists() ? snapshot.val() : {};
+      if (selectedBizId === "default_hall") renderSelectedBusinessMedia();
+      renderBusinessListAndSelector();
+    });
 
-      keys.forEach((id) => {
-        const item = data[id];
+    onValue(ref(db, "gallery/videos"), (snapshot) => {
+      defaultHallVideos = snapshot.exists() ? snapshot.val() : {};
+      if (selectedBizId === "default_hall") renderSelectedBusinessMedia();
+      renderBusinessListAndSelector();
+    });
+
+    function getSelectedBusinessName() {
+      if (selectedBizId === "default_hall") {
+        return "पवित्र बंधन - मैरिज हॉल एंड लॉन";
+      }
+      return customBusinesses[selectedBizId]?.name || "चयनित बिज़नेस";
+    }
+
+    window.onSelectActiveBusiness = function(bizId) {
+      selectedBizId = bizId;
+      document.getElementById("activeBizSelector").value = bizId;
+      const bName = getSelectedBusinessName();
+      document.getElementById("photoTargetBizName").textContent = "चयनित पेज: " + bName;
+      document.getElementById("videoTargetBizName").textContent = "चयनित पेज: " + bName;
+      renderSelectedBusinessMedia();
+    };
+
+    function renderBusinessListAndSelector() {
+      const selector = document.getElementById("activeBizSelector");
+      const listEl = document.getElementById("adminBusinessList");
+      const countBadge = document.getElementById("bizCountBadge");
+
+      // 1. Populate Dropdown Selector
+      selector.innerHTML = `<option value="default_hall">🏢 पवित्र बंधन - मैरिज हॉल एंड लॉन (Main)</option>`;
+      const customKeys = Object.keys(customBusinesses);
+      customKeys.forEach((bizId) => {
+        const b = customBusinesses[bizId];
+        if (!b) return;
+        const opt = document.createElement("option");
+        opt.value = bizId;
+        opt.textContent = `✨ ${b.name}`;
+        selector.appendChild(opt);
+      });
+      selector.value = selectedBizId;
+
+      const bName = getSelectedBusinessName();
+      document.getElementById("photoTargetBizName").textContent = "चयनित पेज: " + bName;
+      document.getElementById("videoTargetBizName").textContent = "चयनित पेज: " + bName;
+
+      // 2. Populate Business Management List
+      listEl.innerHTML = "";
+      countBadge.textContent = `${1 + customKeys.length} सेवाएं`;
+
+      // A. Default Marriage Hall Card Item
+      const hallPhotoCount = Object.keys(defaultHallPhotos).length;
+      const hallVideoCount = Object.keys(defaultHallVideos).length;
+      const hallCover = siteSettingsData.hallCoverUrl || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80";
+
+      const defaultDiv = document.createElement("div");
+      defaultDiv.className = "admin-media-item";
+      defaultDiv.style.border = selectedBizId === "default_hall" ? "2px solid #7a1224" : "1px solid #e0e0e0";
+      defaultDiv.innerHTML = `
+        <div class="media-thumb-box">
+          <img src="${hallCover}" alt="Marriage Hall Cover" />
+        </div>
+        <div class="admin-media-controls">
+          <strong style="color:var(--primary-dark); font-size:0.95rem; display:block; margin-bottom:4px;">
+            🏢 पवित्र बंधन - मैरिज हॉल एंड लॉन (मुख्य पेज)
+          </strong>
+          <span style="font-size:0.78rem; color:#555; display:block; margin-bottom:8px;">
+            ${hallPhotoCount} फोटो • ${hallVideoCount} वीडियो
+          </span>
+          <div class="action-btn-row">
+            <button class="sm-btn select-biz" onclick="onSelectActiveBusiness('default_hall')">
+              <i class="fa-solid fa-photo-film"></i> इसके फोटो/वीडियो मैनेज करें
+            </button>
+            <label class="sm-btn replace">
+              <i class="fa-solid fa-image"></i> कवर फोटो बदलें
+              <input type="file" accept="image/*" style="display:none;" onchange="replaceDefaultHallCover(this)" />
+            </label>
+          </div>
+          <div id="defaultHallCoverStatus" class="item-inline-status"></div>
+        </div>
+      `;
+      listEl.appendChild(defaultDiv);
+
+      // B. Custom Businesses Cards
+      customKeys.reverse().forEach((bizId) => {
+        const b = customBusinesses[bizId];
+        if (!b) return;
+        const pCount = Object.keys(b.photos || {}).length;
+        const vCount = Object.keys(b.videos || {}).length;
+
         const div = document.createElement("div");
         div.className = "admin-media-item";
+        div.style.border = selectedBizId === bizId ? "2px solid #7a1224" : "1px solid #e0e0e0";
         div.innerHTML = `
           <div class="media-thumb-box">
-            <img src="${item.url}" alt="${item.title || ''}" loading="lazy" />
+            <img src="${b.coverUrl || ''}" alt="${b.name || ''}" />
           </div>
           <div class="admin-media-controls">
-            <input type="text" id="photoTitle_${id}" value="${item.title || ''}" placeholder="फोटो का टाइटल" />
+            <input type="text" id="bizName_${bizId}" value="${b.name || ''}" placeholder="बिज़नेस का नाम (हिंदी)" />
+            <input type="text" id="bizNameEn_${bizId}" value="${b.nameEn || ''}" placeholder="Business Name (English)" />
+            <input type="text" id="bizCat_${bizId}" value="${b.category || ''}" placeholder="कैटेगरी बैज" />
+            <textarea id="bizDesc_${bizId}" rows="2" placeholder="विवरण">${b.description || ''}</textarea>
+            <div style="font-size:0.78rem; color:#555; margin-bottom:8px;">
+              <strong>${pCount} फोटो • ${vCount} वीडियो</strong>
+            </div>
             <div class="action-btn-row">
-              <button class="sm-btn save" onclick="updatePhotoTitle('${id}')">
-                <i class="fa-solid fa-pen"></i> टाइटल सेव
+              <button class="sm-btn select-biz" onclick="onSelectActiveBusiness('${bizId}')">
+                <i class="fa-solid fa-photo-film"></i> इसके फोटो/वीडियो डालें
+              </button>
+              <button class="sm-btn save" onclick="updateBusinessDetails('${bizId}')">
+                <i class="fa-solid fa-pen"></i> डिटेल सेव
               </button>
               <label class="sm-btn replace">
-                <i class="fa-solid fa-rotate"></i> फोटो बदलें
-                <input type="file" accept="image/*" style="display:none;" onchange="replacePhoto('${id}', this)" />
+                <i class="fa-solid fa-rotate"></i> कवर बदलें
+                <input type="file" accept="image/*" style="display:none;" onchange="replaceBusinessCover('${bizId}', this)" />
               </label>
-              <button class="sm-btn delete" onclick="deletePhoto('${id}')">
-                <i class="fa-solid fa-trash"></i> डिलीट
+              <button class="sm-btn delete" onclick="deleteBusinessPage('${bizId}')">
+                <i class="fa-solid fa-trash"></i> पेज हटाएं
               </button>
             </div>
-            <div id="photoItemStatus_${id}" class="item-inline-status"></div>
+            <div id="bizItemStatus_${bizId}" class="item-inline-status"></div>
           </div>
         `;
         listEl.appendChild(div);
       });
-    });
+    }
 
+    // Create a New Business Page (Catering, Stand/Tent, Restaurant, etc.)
+    window.createNewBusiness = async function(e) {
+      e.preventDefault();
+      const nameInput = document.getElementById("newBizName");
+      const nameEnInput = document.getElementById("newBizNameEn");
+      const catInput = document.getElementById("newBizCategory");
+      const descInput = document.getElementById("newBizDesc");
+      const coverInput = document.getElementById("newBizCoverFile");
+      const statusEl = document.getElementById("createBizStatus");
+      const btn = document.getElementById("createBizBtn");
+
+      const file = coverInput.files[0];
+      if (!file) return;
+
+      try {
+        btn.disabled = true;
+        statusEl.style.color = "#b36b00";
+        statusEl.textContent = "⏳ कवर फोटो ImgBB पर अपलोड हो रहा है और नया पेज बन रहा है...";
+
+        const coverUrl = await uploadImageToImgBB(file);
+        const newBizRef = push(businessesRef);
+        const newBizId = newBizRef.key;
+
+        await set(newBizRef, {
+          name: nameInput.value.trim(),
+          nameEn: nameEnInput.value.trim() || nameInput.value.trim(),
+          category: catInput.value.trim(),
+          categoryEn: catInput.value.trim(),
+          subtitle: catInput.value.trim(),
+          subtitleEn: catInput.value.trim(),
+          description: descInput.value.trim(),
+          descEn: descInput.value.trim(),
+          coverUrl: coverUrl,
+          createdAt: Date.now()
+        });
+
+        statusEl.style.color = "green";
+        statusEl.textContent = "✅ नया बिज़नेस पेज बन गया! अब आप इसमें फोटो और वीडियो डाल सकते हैं।";
+
+        nameInput.value = "";
+        nameEnInput.value = "";
+        catInput.value = "";
+        descInput.value = "";
+        coverInput.value = "";
+
+        // Automatically switch active selector to the newly created business!
+        window.onSelectActiveBusiness(newBizId);
+      } catch (err) {
+        statusEl.style.color = "red";
+        statusEl.textContent = "❌ त्रुटि: " + err.message;
+      } finally {
+        btn.disabled = false;
+      }
+    };
+
+    window.replaceDefaultHallCover = async function(inputEl) {
+      const file = inputEl.files[0];
+      if (!file) return;
+      const st = document.getElementById("defaultHallCoverStatus");
+      try {
+        st.style.color = "#b36b00";
+        st.textContent = "⏳ मैरिज हॉल का नया कवर फोटो अपलोड हो रहा है...";
+        const newUrl = await uploadImageToImgBB(file);
+        await update(settingsRef, { hallCoverUrl: newUrl, updatedAt: Date.now() });
+        st.style.color = "green";
+        st.textContent = "✅ कवर फोटो बदल गया!";
+      } catch (err) {
+        st.style.color = "red";
+        st.textContent = "❌ त्रुटि: " + err.message;
+      }
+    };
+
+    window.updateBusinessDetails = async function(bizId) {
+      const name = document.getElementById(`bizName_${bizId}`).value.trim();
+      const nameEn = document.getElementById(`bizNameEn_${bizId}`).value.trim();
+      const category = document.getElementById(`bizCat_${bizId}`).value.trim();
+      const description = document.getElementById(`bizDesc_${bizId}`).value.trim();
+      const st = document.getElementById(`bizItemStatus_${bizId}`);
+
+      st.style.color = "#b36b00";
+      st.textContent = "सेव हो रहा है...";
+      await update(ref(db, `businesses/${bizId}`), {
+        name,
+        nameEn: nameEn || name,
+        category,
+        categoryEn: category,
+        subtitle: category,
+        subtitleEn: category,
+        description,
+        descEn: description,
+        updatedAt: Date.now()
+      });
+      st.style.color = "green";
+      st.textContent = "✅ बिज़नेस की जानकारी अपडेट हो गई!";
+      setTimeout(() => { if (st) st.textContent = ""; }, 2500);
+    };
+
+    window.replaceBusinessCover = async function(bizId, inputEl) {
+      const file = inputEl.files[0];
+      if (!file) return;
+      const st = document.getElementById(`bizItemStatus_${bizId}`);
+      try {
+        st.style.color = "#b36b00";
+        st.textContent = "⏳ नया कवर फोटो अपलोड हो रहा है...";
+        const newUrl = await uploadImageToImgBB(file);
+        await update(ref(db, `businesses/${bizId}`), {
+          coverUrl: newUrl,
+          updatedAt: Date.now()
+        });
+        st.style.color = "green";
+        st.textContent = "✅ कवर फोटो रिप्लेस हो गया!";
+      } catch (err) {
+        st.style.color = "red";
+        st.textContent = "❌ त्रुटि: " + err.message;
+      }
+    };
+
+    window.deleteBusinessPage = async function(bizId) {
+      const bName = customBusinesses[bizId]?.name || "इस बिज़नेस";
+      if (!confirm(`क्या आप वाकई "${bName}" का पूरा पेज और उसके सारे फोटो-वीडियो डिलीट करना चाहते हैं?`)) return;
+      await remove(ref(db, `businesses/${bizId}`));
+    };
+
+    // ================= DYNAMIC PATH HELPERS FOR PHOTOS & VIDEOS =================
+    function getActivePhotosPath() {
+      return selectedBizId === "default_hall"
+        ? "gallery/photos"
+        : `businesses/${selectedBizId}/photos`;
+    }
+
+    function getActiveVideosPath() {
+      return selectedBizId === "default_hall"
+        ? "gallery/videos"
+        : `businesses/${selectedBizId}/videos`;
+    }
+
+    function renderSelectedBusinessMedia() {
+      // 1. Render Photos of Selected Business
+      const photoListEl = document.getElementById("adminPhotoList");
+      const photoCountBadge = document.getElementById("photoCountBadge");
+      photoListEl.innerHTML = "";
+
+      const activePhotosObj = selectedBizId === "default_hall"
+        ? defaultHallPhotos
+        : (customBusinesses[selectedBizId]?.photos || {});
+
+      const pKeys = Object.keys(activePhotosObj).reverse();
+      photoCountBadge.textContent = `${pKeys.length} फोटो`;
+
+      if (pKeys.length === 0) {
+        photoListEl.innerHTML = `<p style="color:#777; font-size:0.88rem;">इस पेज में अभी कोई फोटो अपलोड नहीं है।</p>`;
+      } else {
+        pKeys.forEach((id) => {
+          const item = activePhotosObj[id];
+          if (!item || !item.url) return;
+          const div = document.createElement("div");
+          div.className = "admin-media-item";
+          div.innerHTML = `
+            <div class="media-thumb-box">
+              <img src="${item.url}" alt="${item.title || ''}" loading="lazy" />
+            </div>
+            <div class="admin-media-controls">
+              <input type="text" id="photoTitle_${id}" value="${item.title || ''}" placeholder="फोटो का टाइटल" />
+              <div class="action-btn-row">
+                <button class="sm-btn save" onclick="updatePhotoTitle('${id}')">
+                  <i class="fa-solid fa-pen"></i> टाइटल सेव
+                </button>
+                <label class="sm-btn replace">
+                  <i class="fa-solid fa-rotate"></i> फोटो बदलें
+                  <input type="file" accept="image/*" style="display:none;" onchange="replacePhoto('${id}', this)" />
+                </label>
+                <button class="sm-btn delete" onclick="deletePhoto('${id}')">
+                  <i class="fa-solid fa-trash"></i> डिलीट
+                </button>
+              </div>
+              <div id="photoItemStatus_${id}" class="item-inline-status"></div>
+            </div>
+          `;
+          photoListEl.appendChild(div);
+        });
+      }
+
+      // 2. Render Videos of Selected Business
+      const videoListEl = document.getElementById("adminVideoList");
+      const videoCountBadge = document.getElementById("videoCountBadge");
+      videoListEl.innerHTML = "";
+
+      const activeVideosObj = selectedBizId === "default_hall"
+        ? defaultHallVideos
+        : (customBusinesses[selectedBizId]?.videos || {});
+
+      const vKeys = Object.keys(activeVideosObj).reverse();
+      videoCountBadge.textContent = `${vKeys.length} वीडियो`;
+
+      if (vKeys.length === 0) {
+        videoListEl.innerHTML = `<p style="color:#777; font-size:0.88rem;">इस पेज में अभी कोई वीडियो अपलोड नहीं है।</p>`;
+      } else {
+        vKeys.forEach((id) => {
+          const item = activeVideosObj[id];
+          if (!item) return;
+          const videoSrc = item.url || item.base64Data || "";
+          const div = document.createElement("div");
+          div.className = "admin-media-item";
+          div.innerHTML = `
+            <div class="media-thumb-box">
+              <video src="${videoSrc}" controls preload="metadata"></video>
+            </div>
+            <div class="admin-media-controls">
+              <input type="text" id="videoTitle_${id}" value="${item.title || ''}" placeholder="वीडियो का टाइटल" />
+              <div class="action-btn-row">
+                <button class="sm-btn save" onclick="updateVideoTitle('${id}')">
+                  <i class="fa-solid fa-pen"></i> टाइटल सेव
+                </button>
+                <label class="sm-btn replace">
+                  <i class="fa-solid fa-rotate"></i> वीडियो बदलें
+                  <input type="file" accept="video/*" style="display:none;" onchange="replaceVideo('${id}', this)" />
+                </label>
+                <button class="sm-btn delete" onclick="deleteVideo('${id}')">
+                  <i class="fa-solid fa-trash"></i> डिलीट
+                </button>
+              </div>
+              <div id="videoItemStatus_${id}" class="item-inline-status"></div>
+            </div>
+          `;
+          videoListEl.appendChild(div);
+        });
+      }
+    }
+
+    // ================= PHOTO ACTIONS (FOR SELECTED BUSINESS) =================
     window.uploadNewPhoto = async function(e) {
       e.preventDefault();
       const titleInput = document.getElementById("newPhotoTitle");
@@ -946,13 +1396,15 @@
       const file = fileInput.files[0];
       if (!file) return;
 
+      const targetPath = getActivePhotosPath();
+
       try {
         btn.disabled = true;
         statusEl.style.color = "#b36b00";
-        statusEl.textContent = "⏳ फोटो ImgBB पर अपलोड हो रहा है...";
+        statusEl.textContent = `⏳ फोटो ImgBB पर अपलोड हो रहा है (${getSelectedBusinessName()})...`;
 
         const imageUrl = await uploadImageToImgBB(file);
-        const newRef = push(photosRef);
+        const newRef = push(ref(db, targetPath));
         await set(newRef, {
           title: titleInput.value.trim(),
           url: imageUrl,
@@ -960,7 +1412,7 @@
         });
 
         statusEl.style.color = "green";
-        statusEl.textContent = "✅ फोटो सफलतापूर्वक जुड़ गया!";
+        statusEl.textContent = `✅ फोटो "${getSelectedBusinessName()}" में सफलतापूर्वक जुड़ गया!`;
         titleInput.value = "";
         fileInput.value = "";
       } catch (err) {
@@ -974,9 +1426,11 @@
     window.updatePhotoTitle = async function(id) {
       const val = document.getElementById(`photoTitle_${id}`).value.trim();
       const st = document.getElementById(`photoItemStatus_${id}`);
+      const targetPath = getActivePhotosPath();
+
       st.style.color = "#b36b00";
       st.textContent = "सेव हो रहा है...";
-      await update(ref(db, `gallery/photos/${id}`), { title: val });
+      await update(ref(db, `${targetPath}/${id}`), { title: val });
       st.style.color = "green";
       st.textContent = "✅ टाइटल अपडेट हो गया!";
       setTimeout(() => { if (st) st.textContent = ""; }, 2500);
@@ -986,11 +1440,13 @@
       const file = inputEl.files[0];
       if (!file) return;
       const st = document.getElementById(`photoItemStatus_${id}`);
+      const targetPath = getActivePhotosPath();
+
       try {
         st.style.color = "#b36b00";
         st.textContent = "⏳ नया फोटो ImgBB पर अपलोड हो रहा है...";
         const newUrl = await uploadImageToImgBB(file);
-        await update(ref(db, `gallery/photos/${id}`), {
+        await update(ref(db, `${targetPath}/${id}`), {
           url: newUrl,
           updatedAt: Date.now()
         });
@@ -1004,57 +1460,11 @@
 
     window.deletePhoto = async function(id) {
       if (!confirm("क्या आप वाकई इस फोटो को हटाना चाहते हैं?")) return;
-      await remove(ref(db, `gallery/photos/${id}`));
+      const targetPath = getActivePhotosPath();
+      await remove(ref(db, `${targetPath}/${id}`));
     };
 
-    // ================= VIDEO GALLERY MANAGEMENT (Cloudinary + RTDB) =================
-    const videosRef = ref(db, "gallery/videos");
-
-    onValue(videosRef, (snapshot) => {
-      const listEl = document.getElementById("adminVideoList");
-      const countBadge = document.getElementById("videoCountBadge");
-      listEl.innerHTML = "";
-
-      if (!snapshot.exists()) {
-        countBadge.textContent = "0 वीडियो";
-        listEl.innerHTML = `<p style="color:#777; font-size:0.88rem;">अभी कोई वीडियो अपलोड नहीं है।</p>`;
-        return;
-      }
-
-      const data = snapshot.val();
-      const keys = Object.keys(data).reverse();
-      countBadge.textContent = `${keys.length} वीडियो`;
-
-      keys.forEach((id) => {
-        const item = data[id];
-        const videoSrc = item.url || item.base64Data || "";
-        const div = document.createElement("div");
-        div.className = "admin-media-item";
-        div.innerHTML = `
-          <div class="media-thumb-box">
-            <video src="${videoSrc}" controls preload="metadata"></video>
-          </div>
-          <div class="admin-media-controls">
-            <input type="text" id="videoTitle_${id}" value="${item.title || ''}" placeholder="वीडियो का टाइटल" />
-            <div class="action-btn-row">
-              <button class="sm-btn save" onclick="updateVideoTitle('${id}')">
-                <i class="fa-solid fa-pen"></i> टाइटल सेव
-              </button>
-              <label class="sm-btn replace">
-                <i class="fa-solid fa-rotate"></i> वीडियो बदलें
-                <input type="file" accept="video/*" style="display:none;" onchange="replaceVideo('${id}', this)" />
-              </label>
-              <button class="sm-btn delete" onclick="deleteVideo('${id}')">
-                <i class="fa-solid fa-trash"></i> डिलीट
-              </button>
-            </div>
-            <div id="videoItemStatus_${id}" class="item-inline-status"></div>
-          </div>
-        `;
-        listEl.appendChild(div);
-      });
-    });
-
+    // ================= VIDEO ACTIONS (FOR SELECTED BUSINESS) =================
     window.uploadNewVideo = async function(e) {
       e.preventDefault();
       const titleInput = document.getElementById("newVideoTitle");
@@ -1065,6 +1475,8 @@
       const file = fileInput.files[0];
       if (!file) return;
 
+      const targetPath = getActiveVideosPath();
+
       try {
         btn.disabled = true;
         statusEl.style.color = "#b36b00";
@@ -1074,7 +1486,7 @@
           statusEl.textContent = `⏳ वीडियो Cloudinary पर अपलोड हो रहा है (${percent}%)...`;
         });
 
-        const newRef = push(videosRef);
+        const newRef = push(ref(db, targetPath));
         await set(newRef, {
           title: titleInput.value.trim(),
           url: videoUrl,
@@ -1082,7 +1494,7 @@
         });
 
         statusEl.style.color = "green";
-        statusEl.textContent = "✅ वीडियो Cloudinary पर अपलोड होकर डेटाबेस में सेव हो गया!";
+        statusEl.textContent = `✅ वीडियो "${getSelectedBusinessName()}" में सेव हो गया!`;
         titleInput.value = "";
         fileInput.value = "";
       } catch (err) {
@@ -1096,9 +1508,11 @@
     window.updateVideoTitle = async function(id) {
       const val = document.getElementById(`videoTitle_${id}`).value.trim();
       const st = document.getElementById(`videoItemStatus_${id}`);
+      const targetPath = getActiveVideosPath();
+
       st.style.color = "#b36b00";
       st.textContent = "सेव हो रहा है...";
-      await update(ref(db, `gallery/videos/${id}`), { title: val });
+      await update(ref(db, `${targetPath}/${id}`), { title: val });
       st.style.color = "green";
       st.textContent = "✅ वीडियो का टाइटल अपडेट हो गया!";
       setTimeout(() => { if (st) st.textContent = ""; }, 2500);
@@ -1108,6 +1522,8 @@
       const file = inputEl.files[0];
       if (!file) return;
       const st = document.getElementById(`videoItemStatus_${id}`);
+      const targetPath = getActiveVideosPath();
+
       try {
         st.style.color = "#b36b00";
         st.textContent = "⏳ नया वीडियो Cloudinary पर अपलोड हो रहा है (0%)...";
@@ -1116,9 +1532,9 @@
           st.textContent = `⏳ नया वीडियो Cloudinary पर अपलोड हो रहा है (${percent}%)...`;
         });
 
-        await update(ref(db, `gallery/videos/${id}`), {
+        await update(ref(db, `${targetPath}/${id}`), {
           url: newVideoUrl,
-          base64Data: null, // यदि पहले का कोई Base64 डेटा हो तो हटाकर जगह खाली कर देगा
+          base64Data: null,
           updatedAt: Date.now()
         });
 
@@ -1132,8 +1548,9 @@
 
     window.deleteVideo = async function(id) {
       if (!confirm("क्या आप वाकई इस वीडियो को हटाना चाहते हैं?")) return;
-      await remove(ref(db, `gallery/videos/${id}`));
+      const targetPath = getActiveVideosPath();
+      await remove(ref(db, `${targetPath}/${id}`));
     };
   </script>
 </body>
-                                                  </html>
+  </html>
