@@ -783,8 +783,8 @@
       appId: "1:949702610274:web:04b289c12ef1a787e0f03b"
     };
 
-    // 2. ImgBB API Key (फोटो और लोगो के लिए)
-    const IMGBB_API_KEY = "8104f8ac745d8dc4621b9d758844b418";
+    // 2. ImgBB API Key (फोटो और लोगो के लिए - नई Key अपडेटेड)
+    const IMGBB_API_KEY = "6d207e02198a847aa98d0a2a901485a5";
 
     // 3. Cloudinary Configuration (वीडियो के लिए)
     const CLOUDINARY_CLOUD_NAME = "z0tih2mp";
@@ -1305,8 +1305,8 @@
         st.style.color = "green";
         st.textContent = "✅ कवर फोटो बदल गया!";
       } catch (err) {
-        st.style.color = "red";
-        st.textContent = "❌ त्रुटि: " + err.message;
+        statusEl.style.color = "red";
+        statusEl.textContent = "❌ त्रुटि: " + err.message;
       }
     };
 
@@ -1351,8 +1351,8 @@
         st.style.color = "green";
         st.textContent = "✅ कवर फोटो रिप्लेस हो गया!";
       } catch (err) {
-        st.style.color = "red";
-        st.textContent = "❌ त्रुटि: " + err.message;
+        statusEl.style.color = "red";
+        statusEl.textContent = "❌ त्रुटि: " + err.message;
       }
     };
 
@@ -1536,8 +1536,8 @@
         st.style.color = "green";
         st.textContent = "✅ फोटो रिप्लेस हो गया!";
       } catch (err) {
-        st.style.color = "red";
-        st.textContent = "❌ त्रुटि: " + err.message;
+        statusEl.style.color = "red";
+        statusEl.textContent = "❌ त्रुटि: " + err.message;
       }
     };
 
@@ -1624,8 +1624,8 @@
         st.style.color = "green";
         st.textContent = "✅ वीडियो सफलतापूर्वक रिप्लेस हो गया!";
       } catch (err) {
-        st.style.color = "red";
-        st.textContent = "❌ त्रुटि: " + err.message;
+        statusEl.style.color = "red";
+        statusEl.textContent = "❌ त्रुटि: " + err.message;
       }
     };
 
