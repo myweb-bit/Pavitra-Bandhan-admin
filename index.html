@@ -217,7 +217,6 @@
       margin: 0 auto;
     }
 
-    /* Active Business Selector Banner */
     .active-biz-banner {
       background: linear-gradient(90deg, #4a0713, #7a1224);
       color: #fff;
@@ -332,7 +331,6 @@
       box-shadow: 0 0 0 3px rgba(122, 18, 36, 0.1);
     }
 
-    /* Logo Preview Box */
     .logo-preview-wrap {
       display: flex;
       align-items: center;
@@ -354,7 +352,6 @@
       flex-shrink: 0;
     }
 
-    /* Buttons */
     .admin-btn {
       background: var(--primary);
       color: #fff;
@@ -394,7 +391,6 @@
       line-height: 1.4;
     }
 
-    /* Media & Business List inside Cards */
     .media-list-header {
       margin-top: 22px;
       margin-bottom: 12px;
@@ -503,16 +499,9 @@
     }
 
     @media (max-width: 600px) {
-      .dashboard-grid {
-        grid-template-columns: 1fr;
-      }
-      .biz-select-dropdown {
-        width: 100%;
-        min-width: unset;
-      }
-      header {
-        padding: 10px 4%;
-      }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .biz-select-dropdown { width: 100%; min-width: unset; }
+      header { padding: 10px 4%; }
     }
   </style>
 </head>
@@ -542,7 +531,7 @@
       <img id="topAdminLogo" src="https://i.ibb.co/TDbGMSXY/56456.png" alt="Logo" />
       <div>
         <h1>पवित्र बंधन - मल्टी-बिज़नेस एडमिन पैनल</h1>
-        <span>Manage All Businesses, Titles, ImgBB Photos & Cloudinary Videos</span>
+        <span>Manage All Businesses, Titles, Photos & Cloudinary Videos</span>
       </div>
     </div>
     <div class="header-actions">
@@ -573,7 +562,7 @@
 
     <div class="dashboard-grid">
 
-      <!-- CARD 1: ADD / MANAGE BUSINESSES & EDIT TITLES/DESCRIPTIONS -->
+      <!-- CARD 1: ADD / MANAGE BUSINESSES -->
       <div class="admin-card">
         <h3><i class="fa-solid fa-store"></i> नया बिज़नेस / सर्विस पेज जोड़ें</h3>
         <form onsubmit="createNewBusiness(event)">
@@ -598,7 +587,7 @@
             <textarea id="newBizDesc" rows="2" placeholder="इस सेवा की खासियत और बुकिंग की जानकारी लिखें..." required></textarea>
           </div>
           <div class="form-group">
-            <label>कवर फोटो चुनें (Cover Image - ImgBB) *</label>
+            <label>कवर फोटो चुनें (Cover Image) *</label>
             <input type="file" id="newBizCoverFile" accept="image/*" required />
           </div>
           <button type="submit" class="admin-btn success" id="createBizBtn">
@@ -614,9 +603,9 @@
         <div class="admin-item-list" id="adminBusinessList"></div>
       </div>
 
-      <!-- CARD 2: PHOTO GALLERY MANAGEMENT FOR SELECTED BUSINESS (ImgBB) -->
+      <!-- CARD 2: PHOTO GALLERY MANAGEMENT -->
       <div class="admin-card">
-        <h3><i class="fa-solid fa-images"></i> फोटो गैलरी मैनेजर (ImgBB API)</h3>
+        <h3><i class="fa-solid fa-images"></i> फोटो गैलरी मैनेजर (FreeImage Host API)</h3>
         <div class="target-badge">
           <i class="fa-solid fa-folder-open"></i>
           <span id="photoTargetBizName">चयनित पेज: पवित्र बंधन - मैरिज हॉल एंड लॉन</span>
@@ -646,7 +635,7 @@
         </div>
       </div>
 
-      <!-- CARD 3: VIDEO GALLERY MANAGEMENT FOR SELECTED BUSINESS (Cloudinary) -->
+      <!-- CARD 3: VIDEO GALLERY MANAGEMENT (Cloudinary) -->
       <div class="admin-card">
         <h3><i class="fa-solid fa-film"></i> वीडियो गैलरी मैनेजर (Cloudinary)</h3>
         <div class="target-badge">
@@ -697,7 +686,7 @@
             <input type="file" id="logoFileInput" accept="image/*" required />
           </div>
           <button type="submit" class="admin-btn" id="logoUploadBtn">
-            <i class="fa-solid fa-upload"></i> नया लोगो अपलोड करें (ImgBB)
+            <i class="fa-solid fa-upload"></i> नया लोगो अपलोड करें
           </button>
           <div id="logoStatus" class="status-msg"></div>
         </form>
@@ -758,7 +747,7 @@
     </div>
   </main>
 
-  <!-- ==================== FIREBASE, IMGBB & CLOUDINARY LOGIC ==================== -->
+  <!-- ==================== FIREBASE, FREEIMAGE & CLOUDINARY LOGIC ==================== -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import {
@@ -783,8 +772,8 @@
       appId: "1:949702610274:web:04b289c12ef1a787e0f03b"
     };
 
-    // 2. ImgBB API Key (फोटो और लोगो के लिए - नई Key अपडेटेड)
-    const IMGBB_API_KEY = "6d207e02198a847aa98d0a2a901485a5";
+    // 2. FreeImage.host API Key
+    const FREEIMAGE_API_KEY = "6d207e02198a847aa98d0a2a901485a5";
 
     // 3. Cloudinary Configuration (वीडियो के लिए)
     const CLOUDINARY_CLOUD_NAME = "z0tih2mp";
@@ -895,17 +884,25 @@
       }
     };
 
-    // ================= IMGBB & CLOUDINARY HELPERS =================
+    // ================= FREEIMAGE.HOST UPLOAD ENGINE =================
     async function uploadImageToImgBB(file) {
       const formData = new FormData();
-      formData.append("image", file);
-      const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+      formData.append("key", FREEIMAGE_API_KEY);
+      formData.append("action", "upload");
+      formData.append("source", file);
+      formData.append("format", "json");
+
+      const res = await fetch("https://freeimage.host/api/1/upload", {
         method: "POST",
         body: formData
       });
       const result = await res.json();
-      if (!result.success) throw new Error("ImgBB पर फोटो अपलोड नहीं हो सका");
-      return result.data.url;
+      
+      if (result.status_code === 200 && result.image && result.image.url) {
+        return result.image.url;
+      } else {
+        throw new Error((result.error && result.error.message) || "फोटो अपलोड नहीं हो सका");
+      }
     }
 
     function uploadVideoToCloudinary(file, onProgressCallback) {
@@ -993,7 +990,7 @@
       try {
         btn.disabled = true;
         statusEl.style.color = "#b36b00";
-        statusEl.textContent = "⏳ लोगो ImgBB पर अपलोड हो रहा है...";
+        statusEl.textContent = "⏳ लोगो अपलोड हो रहा है...";
 
         const newLogoUrl = await uploadImageToImgBB(file);
         await update(settingsRef, { logoUrl: newLogoUrl, updatedAt: Date.now() });
@@ -1080,7 +1077,6 @@
 
       const mainHallTitle = siteSettingsData.hallName || "पवित्र बंधन - मैरिज हॉल एंड लॉन";
 
-      // 1. Populate Dropdown Selector
       selector.innerHTML = `<option value="default_hall">🏢 ${mainHallTitle} (Main)</option>`;
       const customKeys = Object.keys(customBusinesses);
       customKeys.forEach((bizId) => {
@@ -1097,11 +1093,9 @@
       document.getElementById("photoTargetBizName").textContent = "चयनित पेज: " + bName;
       document.getElementById("videoTargetBizName").textContent = "चयनित पेज: " + bName;
 
-      // 2. Populate Business Management List
       listEl.innerHTML = "";
       countBadge.textContent = `${1 + customKeys.length} सेवाएं`;
 
-      // A. Default Marriage Hall Card Item (NOW WITH FULL EDITABLE INPUT FIELDS!)
       const hallPhotoCount = Object.keys(defaultHallPhotos).length;
       const hallVideoCount = Object.keys(defaultHallVideos).length;
       const hallCover = siteSettingsData.hallCoverUrl || "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=80";
@@ -1150,7 +1144,6 @@
       `;
       listEl.appendChild(defaultDiv);
 
-      // B. Custom Businesses Cards (WITH FULL EDITABLE INPUT FIELDS)
       customKeys.reverse().forEach((bizId) => {
         const b = customBusinesses[bizId];
         if (!b) return;
@@ -1206,7 +1199,6 @@
       });
     }
 
-    // Save Main Marriage Hall Name, Subtitle, Category & Description
     window.updateMainHallDetails = async function() {
       const hallName = document.getElementById("mainHallNameInput").value.trim();
       const hallNameEn = document.getElementById("mainHallNameEnInput").value.trim();
@@ -1235,7 +1227,6 @@
       }
     };
 
-    // Create a New Business Page (Catering, Stand/Tent, Restaurant, etc.)
     window.createNewBusiness = async function(e) {
       e.preventDefault();
       const nameInput = document.getElementById("newBizName");
@@ -1253,7 +1244,7 @@
       try {
         btn.disabled = true;
         statusEl.style.color = "#b36b00";
-        statusEl.textContent = "⏳ कवर फोटो ImgBB पर अपलोड हो रहा है और नया पेज बन रहा है...";
+        statusEl.textContent = "⏳ नया कवर फोटो अपलोड हो रहा है और नया पेज बन रहा है...";
 
         const coverUrl = await uploadImageToImgBB(file);
         const newBizRef = push(businessesRef);
@@ -1362,7 +1353,7 @@
       await remove(ref(db, `businesses/${bizId}`));
     };
 
-    // ================= DYNAMIC PATH HELPERS FOR PHOTOS & VIDEOS =================
+    // ================= DYNAMIC PATH HELPERS =================
     function getActivePhotosPath() {
       return selectedBizId === "default_hall"
         ? "gallery/photos"
@@ -1376,7 +1367,6 @@
     }
 
     function renderSelectedBusinessMedia() {
-      // 1. Render Photos of Selected Business
       const photoListEl = document.getElementById("adminPhotoList");
       const photoCountBadge = document.getElementById("photoCountBadge");
       photoListEl.innerHTML = "";
@@ -1421,7 +1411,6 @@
         });
       }
 
-      // 2. Render Videos of Selected Business
       const videoListEl = document.getElementById("adminVideoList");
       const videoCountBadge = document.getElementById("videoCountBadge");
       videoListEl.innerHTML = "";
@@ -1468,7 +1457,7 @@
       }
     }
 
-    // ================= PHOTO ACTIONS (FOR SELECTED BUSINESS) =================
+    // ================= PHOTO ACTIONS =================
     window.uploadNewPhoto = async function(e) {
       e.preventDefault();
       const titleInput = document.getElementById("newPhotoTitle");
@@ -1484,7 +1473,7 @@
       try {
         btn.disabled = true;
         statusEl.style.color = "#b36b00";
-        statusEl.textContent = `⏳ फोटो ImgBB पर अपलोड हो रहा है (${getSelectedBusinessName()})...`;
+        statusEl.textContent = `⏳ फोटो अपलोड हो रहा है (${getSelectedBusinessName()})...`;
 
         const imageUrl = await uploadImageToImgBB(file);
         const newRef = push(ref(db, targetPath));
@@ -1527,7 +1516,7 @@
 
       try {
         st.style.color = "#b36b00";
-        st.textContent = "⏳ नया फोटो ImgBB पर अपलोड हो रहा है...";
+        st.textContent = "⏳ नया फोटो अपलोड हो रहा है...";
         const newUrl = await uploadImageToImgBB(file);
         await update(ref(db, `${targetPath}/${id}`), {
           url: newUrl,
@@ -1547,7 +1536,7 @@
       await remove(ref(db, `${targetPath}/${id}`));
     };
 
-    // ================= VIDEO ACTIONS (FOR SELECTED BUSINESS) =================
+    // ================= VIDEO ACTIONS (Cloudinary) =================
     window.uploadNewVideo = async function(e) {
       e.preventDefault();
       const titleInput = document.getElementById("newVideoTitle");
